@@ -1,0 +1,32 @@
+---
+title: "README"
+output: html_document
+---
+
+Course Proect for Coursera: Getting and Cleaning Data 6/2015
+
+A final dataset was created with 1 observation per Subject and Activity pair from the dataset 
+Human Activity Recognition Using Smartphones Dataset
+Version 1.0
+
+The attached code run_analysis.R is annotated in detail to explain the purpose behind each step, and the accompanying codebook describes the derivation of variables, and the outline of the generation of the dataset. 
+
+The original data was downloaded, comprising a training and testing set, each with associated subject lists, There is also a key for the 6 activities included, and information on the features (561).
+
+The components were assembled to create 1 complete dataset with Subject number, Activity type, and measurements. First the subject lists were added to the train and test sets, and then these two sets were combined
+
+All features which are the mean or std of a measurement were extracted, but 'meanFreq' was avoided. 
+The method used to do this combined steps 2 and 4 in sequence unintentionally.
+It may be laborious, but it does work.
+Features to be extracted were pulled into a vector from the file 'features.txt'. Thus first component is "1 tBodyAcc-mean()-X".
+
+The aim was to make this a data frame with col1 - variable numbers and col2 - feature names.
+First I used strsplit to split at the " ", which results in a list of vectors. 
+This can be turned into a data frame using do.call("rbind"), followed by as.data.frame. 
+
+I used this to create vectors which I knew maintained the original order of feature, the numbers are used to extract desired columns (Part 2), and names applied to those columns (Part 4).
+
+Activity names are taken from the file in the download.
+
+The mean of all observations of each Subject-Activity pair is taken (using group_by followed by summarize_each), and the final dataset consists of the 1 value for each pair on each measurement. 
+
